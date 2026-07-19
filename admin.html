@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POCHOPME – Administrace</title>
+<style>
+:root {
+  --teal-dark: #0d4f5c;
+  --teal: #1a8a9e;
+  --teal-light: #4ec3d4;
+  --white: #ffffff;
+  --off-white: #f4f9fb;
+  --text: #0d2535;
+  --text-muted: #5a7a8a;
+  --border: #cde2e8;
+  --danger: #c0392b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--off-white);
+  color: var(--text);
+  min-height: 100vh;
+}
+.topbar {
+  background: var(--teal-dark); color: white;
+  padding: 18px 32px; display: flex; align-items: center; justify-content: space-between;
+}
+.topbar strong { font-size: 16px; letter-spacing: 0.5px; }
+.topbar button {
+  background: rgba(255,255,255,0.12); color: white; border: none;
+  padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px;
+}
+.wrap { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* Login */
+.login-box {
+  max-width: 380px; margin: 80px auto; background: white; border-radius: 16px;
+  padding: 40px; box-shadow: 0 8px 32px rgba(13,79,92,0.10); text-align: center;
+}
+.login-box h1 { font-size: 20px; color: var(--teal-dark); margin-bottom: 6px; }
+.login-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+.login-box input {
+  width: 100%; padding: 12px 14px; margin-bottom: 12px; border: 1.5px solid var(--border);
+  border-radius: 10px; font-size: 14px;
+}
+.login-box button {
+  width: 100%; padding: 12px; background: var(--teal-dark); color: white; border: none;
+  border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px;
+}
+.login-box button:hover { background: var(--teal); }
+.login-error { color: var(--danger); font-size: 13px; margin-top: 10px; min-height: 16px; }
+
+/* Tabs */
+.tabs { display: flex; gap: 8px; margin-bottom: 28px; }
+.tab-btn {
+  padding: 10px 20px; border-radius: 30px; border: 1.5px solid var(--border);
+  background: white; cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--teal-dark);
+}
+.tab-btn.active { background: var(--teal-dark); color: white; border-color: var(--teal-dark); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Card / form */
+.card {
+  background: white; border-radius: 16px; padding: 28px; margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(13,79,92,0.06);
+}
+.card h2 { font-size: 17px; color: var(--teal-dark); margin-bottom: 18px; }
+.fg { margin-bottom: 14px; }
+.fg label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+.fg input, .fg textarea, .fg select {
+  width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px;
+  font-family: inherit;
+}
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fg-note { display: block; font-size: 11.5px; color: var(--text-muted); margin-top: 5px; font-style: italic; }
+.checkbox-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.chk {
+  display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500;
+  color: var(--text); background: var(--off-white); border: 1.5px solid var(--border);
+  padding: 7px 12px; border-radius: 20px; cursor: pointer;
+}
+.chk input { margin: 0; }
+.submit-btn {
+  background: var(--teal-dark); color: white; border: none; padding: 11px 24px;
+  border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; margin-top: 6px;
+}
+.submit-btn:hover { background: var(--teal); }
+.form-msg { font-size: 13px; margin-top: 10px; }
+.form-msg.ok { color: #1a8a4e; }
+.form-msg.err { color: var(--danger); }
+
+/* List */
+.item-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px;
+}
+.item-row .it-info h4 { font-size: 14.5px; color: var(--text); margin-bottom: 3px; }
+.item-row .it-info span { font-size: 12.5px; color: var(--text-muted); }
+.item-row button {
+  background: none; border: 1.5px solid var(--danger); color: var(--danger);
+  padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 12.5px; flex-shrink: 0;
+}
+.item-row button:hover { background: var(--danger); color: white; }
+.empty-note { font-size: 13px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-box">
+  <h1>POCHOPME · Administrace</h1>
+  <p>Přihlas se, abys mohla přidávat webináře a akce.</p>
+  <input type="email" id="loginEmail" placeholder="E-mail">
+  <input type="password" id="loginPassword" placeholder="Heslo">
+  <button onclick="doLogin()">Přihlásit se</button>
+  <div class="login-error" id="loginError"></div>
+</div>
+
+<div id="adminScreen" style="display:none;">
+  <div class="topbar">
+    <strong>POCHOPME · Administrace</strong>
+    <button onclick="doLogout()">Odhlásit se</button>
+  </div>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab-btn active" id="tabBtnWebinar" onclick="switchTab('webinar')">Webináře</button>
+      <button class="tab-btn" id="tabBtnEvent" onclick="switchTab('event')">Kalendář akcí</button>
+    </div>
+
+    <!-- WEBINÁŘ -->
+    <div class="tab-panel active" id="tabWebinar">
+      <div class="card">
+        <h2>Přidat nový webinář</h2>
+        <div class="fg"><label>Název webináře</label><input type="text" id="wTitle" placeholder="Např. Jak porozumět své váze"></div>
+        <div class="fg-row">
+          <div class="fg"><label>Přednášející</label><input type="text" id="wSpeaker" placeholder="Prof. MUDr. Matoulek"></div>
+          <div class="fg"><label>Délka</label><input type="text" id="wDuration" placeholder="45 min"></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg">
+            <label>Téma / kategorie</label>
+            <select id="wTopic">
+              <option>Obezita</option>
+              <option>Výživa</option>
+              <option>Pohyb</option>
+              <option>Menopauza</option>
+              <option>Chirurgie</option>
+              <option>Psychologie</option>
+              <option>Děti</option>
+            </select>
+          </div>
+          <div class="fg"><label>Odkaz na video (nepovinné)</label><input type="text" id="wVideoUrl" placeholder="https://..."></div>
+        </div>
+        <button class="submit-btn" onclick="addWebinar()">Přidat webinář</button>
+        <div class="form-msg" id="wMsg"></div>
+      </div>
+
+      <div class="card">
+        <h2>Existující webináře (z administrace)</h2>
+        <div id="webinarList"><p class="empty-note">Načítám…</p></div>
+      </div>
+    </div>
+
+    <!-- AKCE / KALENDÁŘ -->
+    <div class="tab-panel" id="tabEvent">
+      <div class="card">
+        <h2>Přidat akci do kalendáře</h2>
+        <form id="eventForm" onsubmit="return false;">
+
+          <div class="fg-row">
+            <div class="fg"><label>Datum *</label><input type="date" id="eDate" required></div>
+            <div class="fg"><label>Čas *</label><input type="time" id="eTime" required></div>
+          </div>
+          <div class="fg"><label>Délka *</label><input type="text" id="eDuration" placeholder="60 min" required></div>
+
+          <div class="fg">
+            <label>Pořadatel / Šablona *</label>
+            <div class="checkbox-row">
+              <label class="chk"><input type="checkbox" value="SKO" class="eOrganizer"> SKO</label>
+              <label class="chk"><input type="checkbox" value="MEDISPO" class="eOrganizer"> MEDISPO</label>
+              <label class="chk"><input type="checkbox" value="BARI" class="eOrganizer"> BARI klub</label>
+              <label class="chk"><input type="checkbox" value="NOL" class="eOrganizer"> NOL</label>
+              <label class="chk"><input type="checkbox" value="PROMED" class="eOrganizer"> PROMED</label>
+              <label class="chk"><input type="checkbox" value="LILLY" class="eOrganizer"> Eli Lilly</label>
+            </div>
+          </div>
+
+          <div class="fg"><label>Název *</label><input type="text" id="eTitle" placeholder="Např. MAXIBARI" required></div>
+
+          <div class="fg"><label>Prezentér(ka) *</label><input type="text" id="eSpeaker" placeholder="prof. MUDr. Martin Matoulek, Ph.D., Mgr. Alena Koniakovská" required></div>
+
+          <div class="fg"><label>Anotace *</label><textarea id="eAnotace" rows="3" placeholder="Krátký popis, o čem akce bude" required></textarea></div>
+
+          <div class="fg"><label>Odborníci (jméno – e-mail, oddělené středníkem) *</label><textarea id="eOdbornici" rows="2" placeholder="Dan Kašpar - kaspardaniel10@gmail.com; Mgr. Alena Koniakovská - alena.koniakovska@medispo.net" required></textarea>
+            <span class="fg-note">🔒 Interní údaj, na webu se nikdy nezobrazuje.</span>
+          </div>
+
+          <div class="fg"><label>Účastníci *</label><input type="text" id="eUcastnici" placeholder="Např. pacienti s BMI 50+" required>
+            <span class="fg-note">🔒 Interní údaj, na webu se nezobrazuje.</span>
+          </div>
+
+          <div class="fg-row">
+            <div class="fg">
+              <label>Placený přístup *</label>
+              <select id="ePlaceny" required>
+                <option value="">— vyber —</option>
+                <option value="Ano">Ano</option>
+                <option value="Ne">Ne</option>
+              </select>
+              <span class="fg-note">🔒 Nezobrazuje se na webu.</span>
+            </div>
+            <div class="fg">
+              <label>Záznam *</label>
+              <select id="eZaznam" required>
+                <option value="">— vyber —</option>
+                <option value="Ano">Ano</option>
+                <option value="Ne">Ne</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fg">
+            <label>Veřejný na webu? *</label>
+            <select id="eVerejny" required>
+              <option value="">— vyber —</option>
+              <option value="Ano">Ano – zobrazit na webu</option>
+              <option value="Ne">Ne – zatím skrytý</option>
+            </select>
+          </div>
+
+          <div class="fg"><label>Puštění (kdo pustí / odpovídá) *</label><input type="text" id="ePousteni" placeholder="Anička/Ilona" required>
+            <span class="fg-note">🔒 Nezobrazuje se na webu.</span>
+          </div>
+
+          <div class="fg"><label>Odkaz *</label><input type="text" id="eVideoUrl" placeholder="https://..." required>
+            <span class="fg-note">Na webu se zobrazí jako tlačítko, ne jako text odkazu.</span>
+          </div>
+
+          <button type="submit" class="submit-btn" id="eSubmitBtn" onclick="addEvent()">Přidat akci</button>
+          <button type="button" class="submit-btn" id="eCancelBtn" style="display:none;background:var(--text-muted);margin-left:8px;" onclick="cancelEditEvent()">Zrušit úpravu</button>
+          <div class="form-msg" id="eMsg"></div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Nadcházející akce (z administrace)</h2>
+        <div id="eventList"><p class="empty-note">Načítám…</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getFirestore, collection, addDoc, updateDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // ⚠️ SEM VLOŽ SVOJI FIREBASE KONFIGURACI (stejnou jako v index.html)
+  const firebaseConfig = {
+    apiKey: "AIzaSyC_lQlocbJimAeqHe_txlPgUc-HqUwCLV8",
+    authDomain: "pochopme-cz.firebaseapp.com",
+    projectId: "pochopme-cz",
+    storageBucket: "pochopme-cz.firebasestorage.app",
+    messagingSenderId: "34288977823",
+    appId: "1:34288977823:web:d3a363e6d454b9b81f9faa"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ---------- AUTH ----------
+  window.doLogin = async function () {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errEl = document.getElementById('loginError');
+    errEl.textContent = '';
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (e) {
+      errEl.textContent = 'Přihlášení se nepodařilo. Zkontroluj e-mail a heslo.';
+      console.error(e);
+    }
+  };
+
+  window.doLogout = function () { signOut(auth); };
+
+  onAuthStateChanged(auth, (user) => {
+    const loginScreen = document.getElementById('loginScreen');
+    const adminScreen = document.getElementById('adminScreen');
+    if (user) {
+      loginScreen.style.display = 'none';
+      adminScreen.style.display = 'block';
+      loadWebinarList();
+      loadEventList();
+    } else {
+      loginScreen.style.display = 'block';
+      adminScreen.style.display = 'none';
+    }
+  });
+
+  // ---------- TABS ----------
+  window.switchTab = function (name) {
+    document.getElementById('tabWebinar').classList.toggle('active', name === 'webinar');
+    document.getElementById('tabEvent').classList.toggle('active', name === 'event');
+    document.getElementById('tabBtnWebinar').classList.toggle('active', name === 'webinar');
+    document.getElementById('tabBtnEvent').classList.toggle('active', name === 'event');
+  };
+
+  // ---------- WEBINÁŘE (jednoduché) ----------
+  window.addWebinar = async function () {
+    const msg = document.getElementById('wMsg');
+    const title = document.getElementById('wTitle').value.trim();
+    const speaker = document.getElementById('wSpeaker').value.trim();
+    const duration = document.getElementById('wDuration').value.trim();
+    const topic = document.getElementById('wTopic').value;
+    const videoUrl = document.getElementById('wVideoUrl').value.trim();
+
+    if (!title || !speaker) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Vyplň alespoň název a přednášejícího.';
+      return;
+    }
+    try {
+      await addDoc(collection(db, 'webinars'), {
+        title, speaker, duration, topic, videoUrl, createdAt: serverTimestamp()
+      });
+      msg.className = 'form-msg ok';
+      msg.textContent = 'Webinář byl přidán ✓';
+      document.getElementById('wTitle').value = '';
+      document.getElementById('wSpeaker').value = '';
+      document.getElementById('wDuration').value = '';
+      document.getElementById('wVideoUrl').value = '';
+      loadWebinarList();
+    } catch (e) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Nepodařilo se uložit: ' + e.message;
+    }
+  };
+
+  async function loadWebinarList() {
+    const wrap = document.getElementById('webinarList');
+    wrap.innerHTML = '<p class="empty-note">Načítám…</p>';
+    try {
+      const q = query(collection(db, 'webinars'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        wrap.innerHTML = '<p class="empty-note">Zatím žádné webináře přidané přes administraci.</p>';
+        return;
+      }
+      wrap.innerHTML = '';
+      snap.forEach(docSnap => {
+        const d = docSnap.data();
+        const row = document.createElement('div');
+        row.className = 'item-row';
+        row.innerHTML = `
+          <div class="it-info">
+            <h4>${d.title || ''}</h4>
+            <span>${d.speaker || ''} · ${d.topic || ''} · ${d.duration || ''}</span>
+          </div>
+          <button data-id="${docSnap.id}">Smazat</button>`;
+        row.querySelector('button').addEventListener('click', () => deleteWebinar(docSnap.id));
+        wrap.appendChild(row);
+      });
+    } catch (e) {
+      wrap.innerHTML = '<p class="empty-note">Nepodařilo se načíst seznam.</p>';
+    }
+  }
+
+  async function deleteWebinar(id) {
+    if (!confirm('Opravdu smazat tento webinář?')) return;
+    await deleteDoc(doc(db, 'webinars', id));
+    loadWebinarList();
+  }
+
+  // ---------- AKCE / KALENDÁŘ (detailní šablona) ----------
+  const ORGANIZER_LABELS = {
+    SKO: 'SKO', MEDISPO: 'MEDISPO', BARI: 'BARI klub',
+    NOL: 'NOL', PROMED: 'PROMED', LILLY: 'Eli Lilly'
+  };
+
+  let editingEventId = null;
+
+  window.addEvent = async function () {
+    const msg = document.getElementById('eMsg');
+    const form = document.getElementById('eventForm');
+
+    const date = document.getElementById('eDate').value;
+    const time = document.getElementById('eTime').value;
+    const duration = document.getElementById('eDuration').value.trim();
+    const organizers = Array.from(document.querySelectorAll('.eOrganizer:checked')).map(c => c.value);
+    const title = document.getElementById('eTitle').value.trim();
+    const speaker = document.getElementById('eSpeaker').value.trim();
+    const anotace = document.getElementById('eAnotace').value.trim();
+    const odbornici = document.getElementById('eOdbornici').value.trim();
+    const ucastnici = document.getElementById('eUcastnici').value.trim();
+    const placenyPristup = document.getElementById('ePlaceny').value;
+    const zaznam = document.getElementById('eZaznam').value;
+    const verejny = document.getElementById('eVerejny').value;
+    const pousteni = document.getElementById('ePousteni').value.trim();
+    const videoUrl = document.getElementById('eVideoUrl').value.trim();
+
+    // Validace – vše musí být vyplněné
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      msg.className = 'form-msg err';
+      msg.textContent = 'Vyplň prosím všechna povinná pole (*).';
+      return;
+    }
+    if (organizers.length === 0) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Vyber alespoň jednoho pořadatele.';
+      return;
+    }
+
+    const data = {
+      date, time, duration, organizers, title, speaker, anotace,
+      odbornici, ucastnici, placenyPristup, zaznam, verejny, pousteni, videoUrl
+    };
+
+    try {
+      if (editingEventId) {
+        await updateDoc(doc(db, 'events', editingEventId), data);
+        msg.className = 'form-msg ok';
+        msg.textContent = 'Akce byla upravena ✓';
+        cancelEditEvent();
+      } else {
+        await addDoc(collection(db, 'events'), { ...data, createdAt: serverTimestamp() });
+        msg.className = 'form-msg ok';
+        msg.textContent = 'Akce byla přidána ✓';
+        form.reset();
+      }
+      loadEventList();
+    } catch (e) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Nepodařilo se uložit: ' + e.message;
+    }
+  };
+
+  const eventsCache = {};
+
+  async function loadEventList() {
+    const wrap = document.getElementById('eventList');
+    wrap.innerHTML = '<p class="empty-note">Načítám…</p>';
+    try {
+      const q = query(collection(db, 'events'), orderBy('date', 'asc'));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        wrap.innerHTML = '<p class="empty-note">Zatím žádné naplánované akce.</p>';
+        return;
+      }
+      wrap.innerHTML = '';
+      snap.forEach(docSnap => {
+        const d = docSnap.data();
+        eventsCache[docSnap.id] = d;
+        const badge = d.verejny === 'Ano'
+          ? '<span style="color:#1a8a4e;font-weight:700;">● Veřejný</span>'
+          : '<span style="color:var(--danger);font-weight:700;">● Skrytý</span>';
+        const organizersText = (d.organizers || []).map(o => ORGANIZER_LABELS[o] || o).join(', ') || '—';
+
+        const row = document.createElement('div');
+        row.style.border = '1px solid var(--border)';
+        row.style.borderRadius = '10px';
+        row.style.padding = '16px';
+        row.style.marginBottom = '12px';
+        row.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px;">
+            <h4 style="font-size:15.5px;color:var(--text);">${d.title || ''} &nbsp; ${badge}</h4>
+            <div style="display:flex;gap:8px;flex-shrink:0;">
+              <button data-edit="${docSnap.id}" style="border-color:var(--teal);color:var(--teal);">Upravit</button>
+              <button data-del="${docSnap.id}">Smazat</button>
+            </div>
+          </div>
+          <div style="font-size:12.5px;color:var(--text-muted);line-height:1.8;">
+            <div><b>Datum:</b> ${d.date || ''} &nbsp; <b>Čas:</b> ${d.time || ''} &nbsp; <b>Délka:</b> ${d.duration || ''}</div>
+            <div><b>Pořadatel:</b> ${organizersText}</div>
+            <div><b>Prezentér:</b> ${d.speaker || ''}</div>
+            <div><b>Anotace:</b> ${d.anotace || ''}</div>
+            <div><b>Odborníci:</b> ${d.odbornici || '—'}</div>
+            <div><b>Účastníci:</b> ${d.ucastnici || '—'}</div>
+            <div><b>Placený přístup:</b> ${d.placenyPristup || '—'} &nbsp; <b>Záznam:</b> ${d.zaznam || '—'}</div>
+            <div><b>Puštění:</b> ${d.pousteni || '—'}</div>
+            <div><b>Odkaz:</b> ${d.videoUrl ? `<a href="${d.videoUrl}" target="_blank" rel="noopener">${d.videoUrl}</a>` : '—'}</div>
+          </div>`;
+        row.querySelector('[data-del]').addEventListener('click', () => deleteEvent(docSnap.id));
+        row.querySelector('[data-edit]').addEventListener('click', () => editEvent(docSnap.id));
+        wrap.appendChild(row);
+      });
+    } catch (e) {
+      wrap.innerHTML = '<p class="empty-note">Nepodařilo se načíst seznam.</p>';
+    }
+  }
+
+  window.editEvent = function (id) {
+    const d = eventsCache[id];
+    if (!d) return;
+    editingEventId = id;
+
+    document.getElementById('eDate').value = d.date || '';
+    document.getElementById('eTime').value = d.time || '';
+    document.getElementById('eDuration').value = d.duration || '';
+    document.querySelectorAll('.eOrganizer').forEach(c => { c.checked = (d.organizers || []).includes(c.value); });
+    document.getElementById('eTitle').value = d.title || '';
+    document.getElementById('eSpeaker').value = d.speaker || '';
+    document.getElementById('eAnotace').value = d.anotace || '';
+    document.getElementById('eOdbornici').value = d.odbornici || '';
+    document.getElementById('eUcastnici').value = d.ucastnici || '';
+    document.getElementById('ePlaceny').value = d.placenyPristup || '';
+    document.getElementById('eZaznam').value = d.zaznam || '';
+    document.getElementById('eVerejny').value = d.verejny || '';
+    document.getElementById('ePousteni').value = d.pousteni || '';
+    document.getElementById('eVideoUrl').value = d.videoUrl || '';
+
+    document.getElementById('eSubmitBtn').textContent = 'Uložit změny';
+    document.getElementById('eCancelBtn').style.display = 'inline-block';
+    document.getElementById('eMsg').textContent = '';
+    document.getElementById('eventForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  window.cancelEditEvent = function () {
+    editingEventId = null;
+    document.getElementById('eventForm').reset();
+    document.getElementById('eSubmitBtn').textContent = 'Přidat akci';
+    document.getElementById('eCancelBtn').style.display = 'none';
+  };
+
+
+  async function deleteEvent(id) {
+    if (!confirm('Opravdu smazat tuto akci?')) return;
+    await deleteDoc(doc(db, 'events', id));
+    loadEventList();
+  }
+</script>
+</body>
+</html>
