@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ilona Musatova — Weby, foto, video & AI automatizace</title>
+  <meta name="description" content="Pomáhám firmám a značkám vytvářet moderní weby, obsah na sociální sítě a automatizace, které šetří čas.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='black'/><text x='50' y='68' font-size='52' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>IM</text></svg>">
+  <script>
+    document.documentElement.classList.add('js');
+    var t = 'dark';
+    try { t = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+    document.documentElement.classList.toggle('dark', t === 'dark');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=32">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="logo"><span class="logo-i">I</span>M</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">DOMŮ</a>
+        <a href="o-mne.html" class="nav-link">O MNĚ</a>
+        <a href="portfolio.html" class="nav-link">PORTFOLIO</a>
+        <a href="blog.html" class="nav-link">BLOG</a>
+        <a href="kontakt.html" class="nav-link">KONTAKT</a>
+        <button class="theme-toggle" aria-label="Přepnout světlý/tmavý režim">
+          <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+          <svg class="icon-moon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+        </button>
+      </div>
+      <div class="nav-mobile-ctrl">
+        <button class="theme-toggle" aria-label="Přepnout světlý/tmavý režim">
+          <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+          <svg class="icon-moon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+        </button>
+        <button id="burger" class="burger" aria-label="Menu">
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a href="index.html" class="nav-link">DOMŮ</a>
+        <a href="o-mne.html" class="nav-link">O MNĚ</a>
+        <a href="portfolio.html" class="nav-link">PORTFOLIO</a>
+        <a href="blog.html" class="nav-link">BLOG</a>
+        <a href="kontakt.html" class="nav-link">KONTAKT</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero hero--photo">
+    <div class="hero-bg">
+      <img id="hero-img" src="assets/hero.jpg" alt="Ilona Musatova">
+    </div>
+    <div class="container hero-copy">
+      <h1 class="ghost-title hero-title">
+        <span class="hero-in" style="--d:100ms">Ilona</span>
+        <span class="hero-in" style="--d:250ms">Musatova</span>
+      </h1>
+      <p class="hero-sub hero-in" style="--d:420ms">
+        <span style="white-space:nowrap;">Pomáhám firmám a značkám vytvářet moderní weby,</span><br>
+        <span style="white-space:nowrap;">obsah na sociální sítě a automatizace, které šetří čas.</span>
+      </p>
+      <div class="hero-actions hero-in" style="--d:580ms">
+        <a href="portfolio.html" class="btn-pill">Portfolio</a>
+        <a href="kontakt.html" class="btn-pill ghost">Kontakt</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Co dělám ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal"><span class="title-pill">Co dělám</span></div>
+      <div class="section-body grid grid--services">
+
+        <div class="card card--info reveal" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Tvorba webů"
+          data-detail="Navrhuji a vytvářím moderní responzivní webové stránky – od jednoduchých prezentací po e-shopy. Kladu důraz na rychlost načítání, přehlednou navigaci a to, aby web dobře fungoval na mobilu i desktopu. Součástí je i základní SEO nastavení a napojení na analytiku, aby web nejen hezky vypadal, ale opravdu přinášel klienty.">
+          <div class="icon-box">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+          </div>
+          <h3 class="card-title">Tvorba webů</h3>
+          <p class="card-text">Moderní responzivní weby postavené s důrazem na výkon a uživatelský zážitek.</p>
+          <span class="card-more">Zjistit více →</span>
+        </div>
+
+        <div class="card card--info reveal" style="--d:100ms" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Fotografie"
+          data-detail="Produktová fotografie pro e-shopy, portréty, focení eventů i komerční kampaně na míru. Postarám se o kompletní servis – od přípravy scény a rekvizit přes samotné focení až po finální retuš a úpravu fotek do podoby, která je připravená rovnou k použití.">
+          <div class="icon-box">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
+          </div>
+          <h3 class="card-title">Fotografie</h3>
+          <p class="card-text">Produktová fotografie, portréty, eventy a komerční obsah.</p>
+          <span class="card-more">Zjistit více →</span>
+        </div>
+
+        <div class="card card--info reveal" style="--d:200ms" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Videoprodukce"
+          data-detail="Natáčení a střih videí pro sociální sítě, reklamní spoty i firemní prezentace. Součástí je color grading, práce se zvukem a úprava do formátů na míru danému kanálu – ať už jde o Reels, YouTube nebo web.">
+          <div class="icon-box">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg>
+          </div>
+          <h3 class="card-title">Videoprodukce</h3>
+          <p class="card-text">Natáčení, střih, color grading a videa pro sociální sítě.</p>
+          <span class="card-more">Zjistit více →</span>
+        </div>
+
+        <div class="card card--info reveal" style="--d:300ms" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="AI automatizace"
+          data-detail="Nastavuji automatizace, které ušetří hodiny opakované práce – propojení nástrojů mezi sebou, automatické zpracování dat, chatboty nebo generování obsahu pomocí AI. Řešení navrhuji na míru konkrétním potřebám a procesům vaší firmy.">
+          <div class="icon-box">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
+          </div>
+          <h3 class="card-title">AI automatizace</h3>
+          <p class="card-text">Automatizace procesů pomocí AI nástrojů a moderních API.</p>
+          <span class="card-more">Zjistit více →</span>
+        </div>
+
+        <div class="card card--info reveal" style="--d:400ms" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Grafický design"
+          data-detail="Tvorba vizuální identity značky – logo, barvy, typografie – i grafika pro sociální sítě, prezentace a tiskoviny. Vše navrhuji tak, aby značka působila jednotně a profesionálně napříč všemi materiály.">
+          <div class="icon-box">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg>
+          </div>
+          <h3 class="card-title">Grafický design</h3>
+          <p class="card-text">Vizuální identita, grafika pro sociální sítě a marketingové materiály.</p>
+          <span class="card-more">Zjistit více →</span>
+        </div>
+
+        <div class="card card-cta reveal" style="--d:500ms">
+          <p class="card-cta-title">Máte nápad na projekt?</p>
+          <p class="card-text">Pojďme ho společně proměnit v realitu.</p>
+          <a href="kontakt.html" class="card-cta-link">Napište mi →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Statistiky ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="card stats reveal">
+        <div>
+          <div class="stat-num"><span class="counter" data-target="15">0</span>+</div>
+          <p class="stat-label">Projektů</p>
+        </div>
+        <div>
+          <div class="stat-num"><span class="counter" data-target="10">0</span>+</div>
+          <p class="stat-label">Klientů</p>
+        </div>
+        <div>
+          <div class="stat-num"><span class="counter" data-target="4">0</span>+</div>
+          <p class="stat-label">Roky zkušeností</p>
+        </div>
+        <div>
+          <div class="stat-num"><span class="counter" data-target="100">0</span>+</div>
+          <p class="stat-label">Hodin střihu videa</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section cta">
+    <div class="container">
+      <h2 class="ghost-title cta-title reveal">Máte projekt v hlavě?</h2>
+      <p class="cta-sub reveal" style="--d:120ms">Ráda si poslechnu, na čem pracujete — a pomůžu vám to dotáhnout.</p>
+      <div class="cta-actions reveal" style="--d:240ms">
+        <a href="kontakt.html" class="btn-pill">Ozvěte se</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="index.html" class="f-link">DOMŮ</a>
+        <a href="o-mne.html" class="f-link">O MNĚ</a>
+        <a href="portfolio.html" class="f-link">PORTFOLIO</a>
+        <a href="blog.html" class="f-link">BLOG</a>
+        <a href="kontakt.html" class="f-link">KONTAKT</a>
+      </div>
+      <div class="socials">
+        <a href="https://www.instagram.com/ilonkaik/" target="_blank" rel="noopener" aria-label="Instagram" class="social-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.9.2 2.3.4.6.2 1 .5 1.4.9.4.4.7.9.9 1.4.2.4.4 1.1.4 2.3.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.9-.4 2.3-.2.6-.5 1-.9 1.4-.4.4-.9.7-1.4.9-.4.2-1.1.4-2.3.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.9-.2-2.3-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.9-.9-1.4-.2-.4-.4-1.1-.4-2.3-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.2-1.9.4-2.3.2-.6.5-1 .9-1.4.4-.4.9-.7 1.4-.9.4-.2 1.1-.4 2.3-.4 1.2-.1 1.6-.1 4.8-.1zm0 2c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.2.8-.4.4-.6.7-.8 1.2-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.2.4.4.7.6 1.2.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.2-.8.4-.4.6-.7.8-1.2.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.4a5.4 5.4 0 110 10.8 5.4 5.4 0 010-10.8zm0 8.8a3.4 3.4 0 100-6.8 3.4 3.4 0 000 6.8zm5.6-9.1a1.3 1.3 0 11-2.6 0 1.3 1.3 0 012.6 0z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/ilona-musatova-116471332/?locale=cs" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.2 2.4 4.2 5.5v6.2zM5.3 7.4a2 2 0 110-4.1 2 2 0 010 4.1zM7.1 20.4H3.6V9h3.5v11.4z"/></svg>
+        </a>
+        <a href="https://github.com/ilonka945" target="_blank" rel="noopener" aria-label="GitHub" class="social-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 2.9.9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5.1 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.4 9.4 0 015 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.8-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.3 6.8-5.2 6.8-9.6C22 6.6 17.5 2 12 2z"/></svg>
+        </a>
+      </div>
+      <p class="copyright">© 2026 Ilona Musatova</p>
+    </div>
+  </footer>
+
+  <div id="service-modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="service-modal-title">
+      <button type="button" class="modal-close" aria-label="Zavřít">&times;</button>
+      <h3 id="service-modal-title" class="modal-title"></h3>
+      <p class="modal-text"></p>
+    </div>
+  </div>
+
+  <script src="assets/main.js?v=16"></script>
+</body>
+</html>
